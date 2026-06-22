@@ -1,4 +1,5 @@
 package com.insurance.backend.user.dto;
+
 import lombok.*;
 
 @Getter
@@ -7,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class LoginRequest {
-    String username;
-    String password;
+
+    private String email;
+    private String password;
 }
