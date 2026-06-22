@@ -5,16 +5,16 @@ import com.insurance.backend.user.dto.AuthResponse;
 import com.insurance.backend.user.dto.RegisterRequest;
 import com.insurance.backend.user.entity.Role;
 import com.insurance.backend.user.entity.User;
-import com.insurance.backend.user.repository.userRepository;
+import com.insurance.backend.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-    private final userRepository userRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthService(userRepository userRepository, BCryptPasswordEncoder passwordEncoder){
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
