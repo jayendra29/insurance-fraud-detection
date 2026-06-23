@@ -52,7 +52,7 @@ public class AuthService {
                 .role(Role.CUSTOMER)
                 .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         return AuthResponse.builder()
                 .message("User registered successfully.")
@@ -79,6 +79,8 @@ public class AuthService {
         return AuthResponse.builder()
                 .token(token)
                 .message("Login successful")
+                .email(user.getEmail())
+                .role(user.getRole().name())
                 .build();
     }
 }
