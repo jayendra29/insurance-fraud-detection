@@ -11,19 +11,19 @@ import com.insurance.backend.user.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     public AuthService(UserRepository userRepository,
-                       BCryptPasswordEncoder passwordEncoder,
+                       PasswordEncoder passwordEncoder,
                        AuthenticationManager authenticationManager,
                        JwtService jwtService) {
 
@@ -34,13 +34,13 @@ public class AuthService {
     }
 
     // ---------------- REGISTER ----------------
-    public AuthResponse register(RegisterRequest request){
+    public AuthResponse register(RegisterRequest request) {
 
-        if(userRepository.existsByEmail(request.getEmail())){
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new ResourceAlreadyExistsException("Email already registered.");
         }
 
-        if(userRepository.existsByPhoneNumber(request.getPhoneNumber())){
+        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
             throw new ResourceAlreadyExistsException("Phone Number already registered.");
         }
 
@@ -52,7 +52,7 @@ public class AuthService {
                 .role(Role.CUSTOMER)
                 .build();
 
-        User savedUser = userRepository.save(user);
+        userRepository.save(user);
 
         return AuthResponse.builder()
                 .message("User registered successfully.")
@@ -60,7 +60,7 @@ public class AuthService {
     }
 
     // ---------------- LOGIN ----------------
-    public AuthResponse login(LoginRequest request){
+    public AuthResponse login(LoginRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
